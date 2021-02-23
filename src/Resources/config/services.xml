@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://symfony.com/doc/current/service_container.html#creating-configuring-services-in-the-container -->
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Default configuration for services in *this* file -->
+        <defaults autowire="true" autoconfigure="true"/>
+
+        <!-- voltel: as shown in the screencast on bundles -->
+        <service id="knpu_lorem_ipsum.knpu_ipsum" class="KnpU\LoremIpsumBundle\KnpUIpsum" public="false" >
+            <argument type="service" id="knpu_lorem_ipsum.word_provider" />
+        </service>
+
+        <!-- default word provider service -->
+        <service id="knpu_lorem_ipsum.knpu_word_provider" class="KnpU\LoremIpsumBundle\KnpUWordProvider" public="false" />
+
+        <!-- This alias gives an opportunity to override this service with custom class -->
+        <service id="knpu_lorem_ipsum.word_provider" alias="knpu_lorem_ipsum.knpu_word_provider" public="false" />
+
+        <!-- For each service in our bundle which is INTENDED to be used directly by the user -->
+        <service id="KnpU\LoremIpsumBundle\KnpUIpsum" alias="knpu_lorem_ipsum.knpu_ipsum" public="false" />
+
+    </services>
+</container>
