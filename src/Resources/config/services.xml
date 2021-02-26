@@ -12,8 +12,10 @@
 
         <!-- voltel: as shown in the screencast on bundles -->
         <service id="knpu_lorem_ipsum.knpu_ipsum" class="KnpU\LoremIpsumBundle\KnpUIpsum" public="true" >
-            <!-- The first argument is a service alias (see below) which can be substituted by the user -->
-            <argument type="service" id="knpu_lorem_ipsum.word_provider" />
+            <!-- The first argument is a COLLECTION of service aliases -->
+            <!-- which include the default word provider (see below) and the ones provided be substituted by the user -->
+            <argument type="tagged" tag="knpu_lorem_ipsum_word_provider" />
+            <!--<argument type="service" id="knpu_lorem_ipsum.word_provider" />-->
         </service>
 
         <service id="knpu_lorem_ipsum.ipsum_api_controller" class="KnpU\LoremIpsumBundle\Controller\IpsumApiController" public="false">
@@ -27,7 +29,9 @@
         </service>
 
         <!-- default word provider service -->
-        <service id="knpu_lorem_ipsum.knpu_word_provider" class="KnpU\LoremIpsumBundle\KnpUWordProvider" public="false" />
+        <service id="knpu_lorem_ipsum.knpu_word_provider" class="KnpU\LoremIpsumBundle\KnpUWordProvider" public="false" >
+            <tag name="knpu_lorem_ipsum_word_provider" />
+        </service>
 
         <!-- This alias gives user an opportunity to override this service with custom class in the bundle config yaml file -->
         <service id="knpu_lorem_ipsum.word_provider" alias="knpu_lorem_ipsum.knpu_word_provider" public="false" />
