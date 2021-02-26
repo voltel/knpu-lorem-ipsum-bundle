@@ -33,7 +33,7 @@ class KnpUIpsum
      * @param int $count
      * @return string
      */
-    public function getParagraphs(int $count = 3): string
+    public function getParagraphs(?int $count = 3): string
     {
         $paragraphs = array();
         for ($i = 0; $i < $count; $i++) {
@@ -43,7 +43,7 @@ class KnpUIpsum
         return implode("\n\n", $paragraphs);
     }
 
-    public function getSentences(int $count = 1): string
+    public function getSentences(?int $count = 1): string
     {
         $count = $count < 1 ? 1 : $count;
         $sentences = array();
@@ -70,7 +70,7 @@ class KnpUIpsum
      * @param  boolean $asArray whether an array or a string should be returned
      * @return mixed   string or array of generated lorem ipsum words
      */
-    public function getWords(int $count = 1, bool $asArray = false)
+    public function getWords(?int $count = 1, bool $asArray = false)
     {
         $count = $count < 1 ? 1 : $count;
 

@@ -19,22 +19,23 @@ class KnpULoremIpsumExtension extends Extension
         $loader->load('services.xml');
 
         $configuration = $this->getConfiguration($configs, $container);
-        $config = $this->processConfiguration($configuration, $configs);
+        $a_config_options = $this->processConfiguration($configuration, $configs);
 
         $definition = $container->getDefinition('knpu_lorem_ipsum.knpu_ipsum');
 
-        if (!is_null($config['word_provider'])) {
+        if (!is_null($a_config_options['word_provider'])) {
             // way 1
             // $definition->setArgument(0, new Reference($config['word_provider']));
 
             // way 2
-            // Instead of changing the argument, we can override the alias to point to their service id.
+            // Instead of changing the argument (as in "way 1"),
+            // we can override the alias to point to service id provided by the user.
             // Do this with $container->setAlias()
-            $container->setAlias('knpu_lorem_ipsum.word_provider', $config['word_provider']);
+            $container->setAlias('knpu_lorem_ipsum.word_provider', $a_config_options['word_provider']);
         }//endif
 
-        $definition->setArgument(1, $config['unicorns_are_real']);
-        $definition->setArgument(2, $config['min_sunshine']);
+        $definition->setArgument(1, $a_config_options['unicorns_are_real']);
+        $definition->setArgument(2, $a_config_options['min_sunshine']);
     }
 
     public function getAlias()
