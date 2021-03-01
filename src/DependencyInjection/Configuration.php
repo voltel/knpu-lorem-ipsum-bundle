@@ -17,10 +17,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('word_provider')
-                ->defaultNull()
-                ->info('Define word provider to replace the default')
-            ->end()
                 ->booleanNode('unicorns_are_real')
                 ->defaultTrue()
                ->info('Whether you believe in unicorns or not')

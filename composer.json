@@ -1,5 +1,5 @@
 {
-    "name": "voltel/lorem-ipsum-bundle",
+    "name": "voltel/screencast-lorem-ipsum-bundle",
     "description": "Happy \"Lorem ipsum\" text with positive English words",
     "type": "symfony-bundle",
     "license": "MIT",

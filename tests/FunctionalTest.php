@@ -35,33 +35,14 @@ class FunctionalTest extends TestCase
         //$ipsum = $container->get('Test\App\Service\KnpUIpsum');
 
         $this->assertInstanceOf(KnpUIpsum::class, $ipsum);
-        $this->assertIsString($ipsum->getParagraphs());
 
-    }//end of function
-
-
-    /**
-     * @test
-     */
-    public function testServiceWiringWithConfiguration()
-    {
-        $kernel = new KnpULoremIpsumTestingKernel([
-            // array version of your YAML config
-            'min_sunshine' => 2,
-            'word_provider' => 'fake_word_provider',
-        ]);
-
-        $kernel->boot();
-        $container = $kernel->getContainer();
-
-        /** @var KnpUIpsum $ipsum */
-        $ipsum = $container->get('knpu_lorem_ipsum.knpu_ipsum');
-        //$ipsum = $container->get('Test\App\Service\KnpUIpsum');
-
-        $c_text = $ipsum->getWords(2);
+        $c_text = $ipsum->getParagraphs();
+        $this->assertIsString($c_text);
 
         $this->assertStringContainsString('stub', $c_text);
+
     }//end of function
+
 
 }//end of class
 
@@ -98,7 +79,8 @@ class KnpULoremIpsumTestingKernel extends Kernel
     {
         $loader->load(function (ContainerBuilder $container) use ($loader) {
             // This fake service id is used in "testServiceWiringWithConfiguration" and is set here:
-            $container->register('fake_word_provider', FakeWordProvider::class);
+            $container->register('fake_word_provider', FakeWordProvider::class)
+                ->addTag('knpu_lorem_ipsum_word_provider');
 
             $container->loadFromExtension('knpu_lorem_ipsum', $this->aKnpuLoremIpsumConfig);
         });
@@ -115,7 +97,12 @@ class KnpULoremIpsumTestingKernel extends Kernel
 }//end of class
 
 
-
+/**
+ * Class FakeWordProvider.
+ * Note: this one is not currently used
+ *
+ * @package KnpU\LoremIpsumBundle\Tests
+ */
 class FakeWordProvider implements WordProviderInterface
 {
     public function getWordList(): array

@@ -13,8 +13,17 @@
         <!-- voltel: as shown in the screencast on bundles -->
         <service id="knpu_lorem_ipsum.knpu_ipsum" class="KnpU\LoremIpsumBundle\KnpUIpsum" public="true" >
             <!-- The first argument is a COLLECTION of service aliases -->
-            <!-- which include the default word provider (see below) and the ones provided be substituted by the user -->
-            <argument type="tagged" tag="knpu_lorem_ipsum_word_provider" />
+
+            <!-- This expects an iterable of services tagged with "knpu_lorem_ipsum_word_provider" -->
+            <argument type="collection" />
+
+            <!-- The collection may include the default word provider (see below) and the ones provided (or substituted) by the user -->
+            <!--
+            <argument type="collection">
+                <argument type="tagged" tag="knpu_lorem_ipsum_word_provider" />
+            </argument>
+            -->
+
             <!--<argument type="service" id="knpu_lorem_ipsum.word_provider" />-->
         </service>
 

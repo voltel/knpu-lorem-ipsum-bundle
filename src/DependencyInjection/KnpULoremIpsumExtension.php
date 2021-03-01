@@ -4,6 +4,7 @@
 namespace KnpU\LoremIpsumBundle\DependencyInjection;
 
 
+use KnpU\LoremIpsumBundle\WordProviderInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -12,30 +13,33 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class KnpULoremIpsumExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    /**
+     * Note: The container builder is empty at the beginning of this method.
+     * There are no services in it, so we can't use "findTaggedServiceIds()" method to locate tagged services.
+     * See the Bundle class for compiler pass.
+     *
+     * @param array $configs
+     * @param ContainerBuilder $container_builder
+     * @throws \Exception
+     */
+    public function load(array $configs, ContainerBuilder $container_builder)
     {
         // voltel: This "strange" code is required to load the config from "Resources/config/services.xml" file
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new XmlFileLoader($container_builder, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
-        $configuration = $this->getConfiguration($configs, $container);
+        $configuration = $this->getConfiguration($configs, $container_builder);
         $a_config_options = $this->processConfiguration($configuration, $configs);
 
-        $definition = $container->getDefinition('knpu_lorem_ipsum.knpu_ipsum');
-
-        if (!is_null($a_config_options['word_provider'])) {
-            // way 1
-            // $definition->setArgument(0, new Reference($config['word_provider']));
-
-            // way 2
-            // Instead of changing the argument (as in "way 1"),
-            // we can override the alias to point to service id provided by the user.
-            // Do this with $container->setAlias()
-            $container->setAlias('knpu_lorem_ipsum.word_provider', $a_config_options['word_provider']);
-        }//endif
+        $definition = $container_builder->getDefinition('knpu_lorem_ipsum.knpu_ipsum');
 
         $definition->setArgument(1, $a_config_options['unicorns_are_real']);
         $definition->setArgument(2, $a_config_options['min_sunshine']);
+
+        // This will later result in a tag needed by compiler pass
+        // being added to all services which implement this interface:
+        $container_builder->registerForAutoconfiguration(WordProviderInterface::class)
+            ->addTag('knpu_lorem_ipsum_word_provider');
     }
 
     public function getAlias()
