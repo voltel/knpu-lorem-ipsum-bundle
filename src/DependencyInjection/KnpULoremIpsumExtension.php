@@ -42,6 +42,15 @@ class KnpULoremIpsumExtension extends Extension
             ->addTag('knpu_lorem_ipsum_word_provider');
     }
 
+    /**
+     * This will be used as an alias for the bundle, as shown e.g. by running in terminal "php bin/console config:dump
+     *  ---------------------------- ------------------------
+     *   Bundle name                  Extension alias
+     *  ---------------------------- ------------------------
+     *   KnpULoremIpsumBundle         knpu_lorem_ipsum
+     *
+     * @return string
+     */
     public function getAlias()
     {
         return 'knpu_lorem_ipsum';
