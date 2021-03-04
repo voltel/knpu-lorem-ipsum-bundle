@@ -1,4 +1,5 @@
-# Happy "Lorem Ipsum" bundle from screencast
+## KnpULoremIpsumBundle - Happy "Lorem Ipsum" bundle from screencast
+
 This is an ed project and it's not maintained.
 
 This bundle adds features for generating *Lorem ipsum* like "fake text" 
@@ -27,7 +28,7 @@ Applications that use Symfony Flex
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require  voltel/screencast-lorem-ipsum-bundle 
+$ composer require  voltel/knpu-lorem-ipsum-bundle 
 ```
 
 Applications that don't use Symfony Flex
@@ -39,7 +40,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require  voltel/screencast-lorem-ipsum-bundle 
+$ composer require  voltel/knpu-lorem-ipsum-bundle 
 ```
 
 ### Step 2: Enable the Bundle

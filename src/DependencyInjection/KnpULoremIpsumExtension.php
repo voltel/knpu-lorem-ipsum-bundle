@@ -26,6 +26,7 @@ class KnpULoremIpsumExtension extends Extension
     {
         // voltel: This "strange" code is required to load the config from "Resources/config/services.xml" file
         $loader = new XmlFileLoader($container_builder, new FileLocator(__DIR__ . '/../Resources/config'));
+        //$loader = new XmlFileLoader($container_builder, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
         $configuration = $this->getConfiguration($configs, $container_builder);
