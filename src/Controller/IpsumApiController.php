@@ -37,8 +37,14 @@ class IpsumApiController extends AbstractController
         if ($this->eventDispatcher) {
             $event = new KnpUApiResponseReadyEvent($a_data);
 
-            /** @noinspection PhpMethodParametersCountMismatchInspection */
-            $this->eventDispatcher->dispatch($event->getEventName(), $event);
+            // Resolving BC with Symfony before 4.3
+            $c_event_name = $event->getEventName();
+            //
+            if (is_a($event, 'Symfony\\Component\\EventDispatcher\\Event')) {
+                $this->eventDispatcher->dispatch($c_event_name, $event);
+            } else {
+                $this->eventDispatcher->dispatch($event, $c_event_name);
+            }//endif
 
             $a_data = $event->getData();
         }//endif
