@@ -7,13 +7,14 @@ namespace KnpU\LoremIpsumBundle\Event;
 
 
 // BC hack. Before Symfony 4.3, there was no Event class in Contracts namespace
-if (class_exists('Symfony\\Contracts\\EventDispatcher\\Event', false)) {
-    class_alias('Symfony\\Contracts\\EventDispatcher\\Event', 'KnpU\\LoremIpsumBundle\\Event\\GenericEvent');
+// For this to work, in terminal run "composer dumpautoload"
+if (class_exists('Symfony\\Contracts\\EventDispatcher\\Event', true)) {
+    class_alias('Symfony\\Contracts\\EventDispatcher\\Event', __NAMESPACE__ . '\\CustomEvent');
 } else {
-    class_alias('Symfony\\Component\\EventDispatcher\\Event', 'KnpU\\LoremIpsumBundle\\Event\\GenericEvent');
+    class_alias('Symfony\\Component\\EventDispatcher\\Event', __NAMESPACE__ . '\\CustomEvent');
 }
 
-class KnpUApiResponseReadyEvent extends GenericEvent
+class KnpUApiResponseReadyEvent extends CustomEvent
 {
     const EVENT_NAME = KnpULoremIpsumEvents::API_RESPONSE_READY;
 

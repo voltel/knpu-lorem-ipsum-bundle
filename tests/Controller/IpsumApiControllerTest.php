@@ -66,7 +66,9 @@ class KnpULoremIpsumApiControllerKernel extends Kernel
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
         $container->loadFromExtension('framework', [
-            // 'secret' => '323afc43a4',
+            // trevis.ci exit with error: "The service "uri_signer" has a dependency on a non-existent parameter "kernel.secret"
+             'secret' => '323afc43a4',
+
             //'routing' => ['utf8' => true],
         ]);
     }
